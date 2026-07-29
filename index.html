@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Plan + Teach + Doodle · Teacher Planner v2.1</title>
+<title>DEMO · Plan + Teach + Doodle Teacher Planner</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Patrick+Hand&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -799,6 +799,54 @@
     color: var(--ink);
   }
   .grade-input:focus { border-color: var(--ink); outline: none; }
+
+
+
+  /* BULK ROSTER TOOLS */
+  .bulk-roster-card {
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    border-radius: var(--radius);
+    padding: 16px;
+    box-shadow: var(--shadow-sm);
+    margin: 0 0 18px;
+  }
+  .bulk-roster-card h3 {
+    font-family: var(--font-display);
+    font-size: 18px;
+    margin-bottom: 4px;
+    color: var(--ink);
+  }
+  .bulk-roster-card .bulk-help {
+    font-family: var(--font-hand);
+    font-size: 16px;
+    color: var(--ink-soft);
+    margin-bottom: 12px;
+  }
+  .bulk-roster-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    align-items: stretch;
+  }
+  .bulk-roster-card textarea {
+    min-height: 150px;
+    resize: vertical;
+    width: 100%;
+  }
+  .bulk-roster-card select[multiple] {
+    min-height: 150px;
+    width: 100%;
+  }
+  .bulk-roster-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  @media (max-width: 800px) {
+    .bulk-roster-grid { grid-template-columns: 1fr; }
+  }
 
   /* GRADEBOOK */
   .gradebook-table {
@@ -2668,6 +2716,7 @@
     body[data-print-page="gradebook"] #page-gradebook,
     body[data-print-page="homework"] #page-homework,
     body[data-print-page="reading"] #page-reading,
+    body[data-print-page="behavior"] #page-behavior,
     body[data-print-page="contacts"] #page-contacts,
     body[data-print-page="unitplans"] #page-unitplans,
     body[data-print-page="curriculum"] #page-curriculum,
@@ -3002,181 +3051,75 @@
   }
 
 
-  /* ─────────────────────────────────────────────
-     THECALMMINDLAB · LIVE DEMO SHELL
-  ────────────────────────────────────────────── */
-  :root { --demo-bar-height: 74px; }
 
-  .live-demo-bar {
-    position: sticky;
-    top: 0;
-    z-index: 100000;
-    min-height: var(--demo-bar-height);
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    align-items: center;
-    gap: 16px;
-    padding: 10px 18px;
-    background: #171717;
-    color: #fff;
-    border-bottom: 3px solid var(--sun);
-    box-shadow: 0 4px 0 rgba(0,0,0,.18);
+  /* Calendar scope badges */
+  .calendar-event-chip.shared-event {
+    background: var(--sky-soft);
+    border-style: solid;
   }
-  .live-demo-badge {
+  .calendar-event-chip.selected-event {
+    background: var(--grape-soft);
+  }
+  .calendar-scope-label {
+    display: block;
+    font-size: 9px;
+    opacity: 0.78;
+    margin-top: 1px;
+    font-family: var(--font-mark);
+  }
+
+
+
+  /* Weekly Focus View + Lesson Color Coding Update */
+  .week-cell.has-lesson.color-coded {
+    border-left: 5px solid var(--lesson-accent, var(--grape));
+    background: var(--lesson-bg, var(--sun-soft));
+  }
+  .week-text { min-height: 24px; white-space: pre-wrap; }
+  .lesson-color-pill {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    min-width: 150px;
-    padding: 10px 16px;
-    border: 2px solid #fff;
+    gap: 6px;
+    margin-top: 6px;
+    padding: 4px 8px;
     border-radius: 999px;
-    background: var(--tomato);
-    color: #fff;
-    font-family: var(--font-body);
-    font-size: 17px;
-    font-weight: 800;
-    letter-spacing: 1.6px;
-    line-height: 1;
-    box-shadow: 3px 3px 0 var(--sun);
-    white-space: nowrap;
-  }
-  .live-demo-copy { min-width: 0; }
-  .live-demo-copy strong {
-    display: block;
-    font-size: 14px;
-    line-height: 1.25;
-    margin-bottom: 2px;
-  }
-  .live-demo-copy span {
-    display: block;
-    color: rgba(255,255,255,.76);
-    font-size: 12px;
-    line-height: 1.35;
-  }
-  .live-demo-actions {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .live-demo-reset {
-    appearance: none;
-    border: 1.5px solid rgba(255,255,255,.5);
-    border-radius: 999px;
-    background: transparent;
-    color: #fff;
-    padding: 9px 12px;
-    font-family: var(--font-body);
-    font-size: 12px;
-    font-weight: 700;
-    cursor: pointer;
-    white-space: nowrap;
-  }
-  .live-demo-reset:hover { background: rgba(255,255,255,.12); }
-  .live-demo-etsy {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 190px;
-    padding: 12px 18px;
-    border: 2px solid #fff;
-    border-radius: 12px;
-    background: var(--sun);
-    color: #171717;
-    font-family: var(--font-body);
-    font-size: 15px;
-    font-weight: 900;
-    text-decoration: none;
-    box-shadow: 4px 4px 0 var(--tomato);
-    transition: transform .15s ease, box-shadow .15s ease;
-    white-space: nowrap;
-  }
-  .live-demo-etsy:hover {
-    transform: translate(-2px,-2px);
-    box-shadow: 6px 6px 0 var(--tomato);
-  }
-  .demo-lock-card {
-    border: 2px dashed var(--line-strong);
-    border-radius: 12px;
-    background: var(--bg);
-    padding: 16px;
-  }
-  .demo-lock-card strong {
-    display: block;
-    font-family: var(--font-display);
-    font-size: 18px;
-    margin-bottom: 6px;
-  }
-  .demo-lock-card p {
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.65);
+    font-size: 11px;
+    font-family: var(--font-mark);
     color: var(--ink-soft);
-    font-size: 13px;
-    margin-bottom: 12px;
   }
-  .demo-lock-card .live-demo-etsy { width: 100%; min-width: 0; }
-
-  @media (min-width: 901px) {
-    .sidebar {
-      top: var(--demo-bar-height) !important;
-      height: calc(100vh - var(--demo-bar-height)) !important;
-    }
+  .lesson-color-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    display: inline-block;
+    background: var(--lesson-accent, var(--grape));
+    border: 1px solid rgba(0,0,0,.12);
   }
-
-  @media (max-width: 900px) {
-    :root { --demo-bar-height: 122px; }
-    .live-demo-bar {
-      grid-template-columns: 1fr auto;
-      gap: 8px 10px;
-      padding: 10px 12px;
-    }
-    .live-demo-badge {
-      min-width: 0;
-      width: max-content;
-      font-size: 15px;
-      padding: 9px 13px;
-    }
-    .live-demo-copy {
-      grid-column: 1 / -1;
-      grid-row: 2;
-    }
-    .live-demo-copy strong { font-size: 12.5px; }
-    .live-demo-copy span { font-size: 11px; }
-    .live-demo-actions { grid-column: 2; grid-row: 1; }
-    .live-demo-reset { display: none; }
-    .live-demo-etsy {
-      min-width: 0;
-      padding: 10px 12px;
-      font-size: 13px;
-    }
-    .mobile-menu-btn { top: calc(var(--demo-bar-height) + 10px) !important; }
-    .sidebar {
-      top: var(--demo-bar-height) !important;
-      height: calc(100dvh - var(--demo-bar-height)) !important;
-      max-height: calc(100dvh - var(--demo-bar-height)) !important;
-    }
-    .sidebar-overlay {
-      top: var(--demo-bar-height) !important;
-    }
+  .week-cell.hide-week-actions .week-lesson-actions { display: none !important; }
+  .weekly-focus-card {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 2px dashed var(--line-strong);
   }
-
   @media print {
-    .live-demo-bar { display: none !important; }
+    .week-lesson-actions { display: none !important; }
   }
 
 </style>
+
+<style id="schedule-setup-responsive-fix">
+  @media (max-width: 900px) {
+    .week-grid { overflow-x: auto; }
+  }
+  @media print {
+    #weekGrid.week-grid { grid-template-columns: 80px repeat(var(--planner-day-count, 5), 1fr) !important; }
+  }
+</style>
 </head>
 <body data-theme="default">
-
-<div class="live-demo-bar no-print" role="region" aria-label="Live demo notice">
-  <div class="live-demo-badge">LIVE DEMO</div>
-  <div class="live-demo-copy">
-    <strong>Explore the Teacher Planner with realistic sample classroom data.</strong>
-    <span>Try the features freely. Changes are temporary and reset when you refresh. Permanent saving and backup/restore are included in the purchased version.</span>
-  </div>
-  <div class="live-demo-actions">
-    <button class="live-demo-reset" type="button" onclick="location.reload()">Reset demo</button>
-    <a class="live-demo-etsy" href="https://www.etsy.com/listing/4504352305/digital-teacher-planner-classroom" target="_blank" rel="noopener">View on Etsy →</a>
-  </div>
-</div>
-
+<div id="demoModeBanner" style="position:sticky;top:0;z-index:99999;background:linear-gradient(90deg,#8b5cf6,#06b6d4);color:#fff;text-align:center;padding:10px 14px;font-family:Arial,sans-serif;font-weight:800;letter-spacing:.3px;box-shadow:0 3px 12px rgba(0,0,0,.12);">DEMO MODE · Try the planner freely · Changes reset when you refresh or close · Purchase the full version to save/export your own data</div>
 
 <button class="mobile-menu-btn no-print" id="mobileMenuBtn" type="button" aria-label="Open menu" aria-expanded="false" onclick="toggleMobileMenu()">
   <span class="mobile-menu-icon" aria-hidden="true">☰</span>
@@ -3274,6 +3217,10 @@
     <div class="nav-item" data-page="reading">
       <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
       Reading Log
+    </div>
+    <div class="nav-item" data-page="behavior">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M21 12c0 5-3.5 7.5-8.2 9.4a2 2 0 0 1-1.6 0C6.5 19.5 3 17 3 12V5l9-3 9 3v7z"/></svg>
+      Behavior Log
     </div>
     <div class="nav-item" data-page="birthdays">
       <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-8H4v8M2 13h20M7 13V8a2 2 0 0 1 4 0v5M13 13V8a2 2 0 0 1 4 0v5M10 4l2-2 2 2"/></svg>
@@ -3430,7 +3377,7 @@
 
       <div class="week-grid" id="weekGrid"></div>
 
-      <p style="font-family: var(--font-hand); color: var(--ink-faint); margin-top: 14px; font-size: 17px;">✏️ Try editing any cell. Demo changes reset when you refresh.</p>
+      <p style="font-family: var(--font-hand); color: var(--ink-faint); margin-top: 14px; font-size: 17px;">✏️ Auto-saves as you tab out. Backup anytime from Settings.</p>
     </section>
 
     <!-- LESSON BANK -->
@@ -3451,6 +3398,19 @@
           <div class="form-row"><label>Lesson Title</label><input id="lessonTitle" class="input" placeholder="e.g., Fractions Review" /></div>
           <div class="form-row"><label>Subject</label><input id="lessonSubject" class="input" placeholder="e.g., Math" /></div>
           <div class="form-row"><label>Class / Grade</label><input id="lessonClass" class="input" placeholder="e.g., Grade 4" /></div>
+
+          <div class="form-row" id="lessonColourWrap"><label>Lesson Box Colour / Year Group</label>
+            <select id="lessonColor" class="input">
+              <option value="">No colour / default</option>
+              <option value="#8EC5FF" data-label="Year 5">Year 5 English</option>
+              <option value="#9AD8B3" data-label="Year 6">Year 6 English</option>
+              <option value="#C7A6E8" data-label="Year 7">Year 7 English</option>
+              <option value="#FFD37A" data-label="English">English</option>
+              <option value="#FFB7A1" data-label="Reading">Reading</option>
+              <option value="#BEE7E8" data-label="Library">Library</option>
+            </select>
+            <input id="lessonColorLabel" class="input" style="margin-top:6px;" placeholder="Optional label shown on weekly box, e.g., Year 5" />
+          </div>
           <div class="form-row"><label>Duration</label><input id="lessonDuration" class="input" placeholder="e.g., 45 minutes" /></div>
           <div class="form-row"><label>Objective</label><textarea id="lessonObjective" class="input" rows="2" placeholder="What will students learn?"></textarea></div>
           <div class="form-row"><label>Lesson Steps</label><textarea id="lessonSteps" class="input" rows="4" placeholder="Warm-up, mini lesson, practice, wrap-up..."></textarea></div>
@@ -3503,7 +3463,7 @@
         <div>
           <div class="card" style="margin-bottom:16px;">
             <h2 class="card-title">✨ Unit Overview</h2>
-            <p class="card-subtitle" style="margin-bottom:0;">Plan complete teaching units with objectives, standards, resources, assessments, and notes. Try adding or editing a plan — demo changes reset when refreshed.</p>
+            <p class="card-subtitle" style="margin-bottom:0;">Plan complete teaching units with objectives, standards, resources, assessments, and notes. Your work saves in this browser and can be included in your backup.</p>
           </div>
           <div id="unitPlanList" class="planning-list"></div>
         </div>
@@ -3672,11 +3632,12 @@
       <div class="page-header">
         <div>
           <h1 class="page-title">Monthly Calendar<svg class="scribble" viewBox="0 0 400 8" preserveAspectRatio="none"><path d="M2 4 Q 50 0, 100 4 T 200 4 T 300 4 T 398 4" stroke="#4A90E2" stroke-width="3" fill="none" stroke-linecap="round"/></svg></h1>
-          <p class="page-subtitle">Click a day to add an event, or drag across days to create a multi-day event 📍</p>
+          <p class="page-subtitle">Click a day to add an event. Choose This Class, All Classes, or Selected Classes 📍</p>
         </div>
       </div>
       <div class="calendar-help-row no-print">
         <span class="calendar-pill">🖱️ Drag across dates = multi-day event</span>
+        <span class="calendar-pill">🌎 Events can be class-only, all classes, or selected classes</span>
         <span class="calendar-pill">↔ Drag an event chip = move it</span>
         <button class="btn btn-secondary btn-sm" onclick="syncCalendarToWeekly(); renderWeek(); showToast('Calendar events synced to weekly planner')">Sync Calendar → Weekly Planner</button>
       </div>
@@ -3720,7 +3681,38 @@
         <input type="text" class="input" id="newStudent" placeholder="Add student name…" style="flex: 1; min-width: 200px;" />
         <input type="date" class="input" id="newStudentBday" title="Birthday (optional)" />
         <button class="btn btn-leaf" onclick="addStudent()">+ Add Student</button>
-        <button class="btn btn-secondary" onclick="location.reload()">↻ Reset Demo</button>
+        <button class="btn btn-secondary" onclick="loadDemoData()">Load Demo</button>
+      </div>
+
+      <div class="bulk-roster-card no-print">
+        <h3>👥 Bulk Student Tools</h3>
+        <p class="bulk-help">Paste a full class list once, then copy the same roster into other subjects/classes without adding each student manually again.</p>
+        <div class="bulk-roster-grid">
+          <div>
+            <div class="form-row">
+              <label for="bulkStudentList">Bulk Add Students</label>
+              <textarea class="input" id="bulkStudentList" placeholder="Paste one student name per line…
+Ava Johnson
+Liam Smith
+Mia Garcia"></textarea>
+            </div>
+            <div class="bulk-roster-actions">
+              <button class="btn btn-leaf" onclick="bulkAddStudents()">+ Bulk Add to Current Class</button>
+              <button class="btn btn-secondary" onclick="document.getElementById('bulkStudentList').value=''">Clear</button>
+            </div>
+          </div>
+          <div>
+            <div class="form-row">
+              <label for="rosterCopyTargets">Copy Current Roster to Other Subjects/Classes</label>
+              <select class="input" id="rosterCopyTargets" multiple></select>
+            </div>
+            <div class="bulk-roster-actions">
+              <button class="btn btn-sky" onclick="copyRosterToSelectedClasses()">Copy Roster</button>
+              <button class="btn btn-secondary" onclick="addNewClass()">+ Add New Class/Subject</button>
+            </div>
+            <p class="bulk-help" style="margin-top:10px;margin-bottom:0;">Tip: Hold Ctrl/Command to select more than one target class. Duplicate student names are skipped automatically.</p>
+          </div>
+        </div>
       </div>
 
       <table class="roster-table">
@@ -3831,6 +3823,33 @@
       <div id="rdList"></div>
     </section>
 
+    <!-- BEHAVIOR LOG -->
+    <section class="page" id="page-behavior">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Behavior Log<svg class="scribble" viewBox="0 0 400 8" preserveAspectRatio="none"><path d="M2 4 Q 50 0, 100 4 T 200 4 T 300 4 T 398 4" stroke="#9B6BB5" stroke-width="3" fill="none" stroke-linecap="round"/></svg></h1>
+          <p class="page-subtitle">Quick behavior notes by student and date 📝</p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:16px; box-shadow: var(--shadow-sm);">
+        <div class="card-title">Add Behavior Note</div>
+        <p class="card-subtitle">Document behavior observations, incidents, supports, follow-ups, or positive notes during the school day.</p>
+        <div class="roster-toolbar" style="align-items:flex-start;">
+          <select class="input" id="bhStudent" style="min-width:180px;"></select>
+          <input type="date" class="input" id="bhDate" />
+          <input type="text" class="input" id="bhType" placeholder="Type (optional): positive, concern, follow-up…" style="flex:1; min-width:220px;" />
+        </div>
+        <div class="form-row" style="margin-bottom:12px;">
+          <label>Behavior Notes</label>
+          <textarea id="bhNote" rows="4" placeholder="Write the behavior details, context, action taken, next step, or follow-up notes…"></textarea>
+        </div>
+        <button class="btn btn-leaf" onclick="addBehavior()">+ Add Behavior Note</button>
+      </div>
+
+      <div id="bhList"></div>
+    </section>
+
     <!-- BIRTHDAYS -->
     <section class="page" id="page-birthdays">
       <div class="page-header">
@@ -3932,7 +3951,7 @@
 
       <textarea class="notes-area" id="notesArea" placeholder="Today I noticed that Maya finally got long division… Note to self: try the visual approach with the small group on Friday…"></textarea>
 
-      <p style="font-family: var(--font-hand); color: var(--ink-faint); margin-top: 10px; font-size: 17px;">✨ Try it freely — demo changes reset when refreshed</p>
+      <p style="font-family: var(--font-hand); color: var(--ink-faint); margin-top: 10px; font-size: 17px;">💾 Auto-saves as you type</p>
     </section>
 
     <!-- PARENT COMMS -->
@@ -4143,10 +4162,23 @@
         </div>
 
         <div class="setting-group">
-          <h3>🕐 Period Schedule</h3>
-          <p style="font-family: var(--font-hand); font-size: 16px; color: var(--ink-faint); margin-bottom: 10px;">Customize times shown in your weekly planner</p>
+          <h3>🕐 Weekly Schedule Setup</h3>
+          <p style="font-family: var(--font-hand); font-size: 16px; color: var(--ink-faint); margin-bottom: 10px;">Customize the periods and days shown in your weekly planner.</p>
+          <label class="checklist-item" style="margin-bottom:12px;">
+            <input type="checkbox" id="setShowWeekends" onchange="toggleWeekends(this.checked)" style="width:18px;height:18px;" />
+            <span>Show Saturday and Sunday in the Weekly Planner</span>
+          </label>
           <div id="periodList"></div>
           <button class="btn btn-secondary btn-sm" onclick="addPeriod()" style="margin-top: 8px;">+ Add Period</button>
+
+          <div class="weekly-focus-card">
+            <h4 style="font-family: var(--font-mark); font-size: 16px; margin-bottom: 8px;">Clean Weekly Planner View</h4>
+            <label class="checklist-item" style="margin-bottom:10px;">
+              <input type="checkbox" id="setHideWeekActions" onchange="toggleWeeklyActionButtons(this.checked)" style="width:18px;height:18px;" />
+              <span>Hide Pull Back, Bump Forward, Next Week, and Bank buttons on weekly lesson boxes</span>
+            </label>
+            <p style="font-family: var(--font-hand); font-size: 15px; color: var(--ink-faint); margin:0;">Great for a cleaner display and printing. You can turn the buttons back on anytime.</p>
+          </div>
         </div>
 
         <div class="setting-group">
@@ -4170,9 +4202,9 @@
             </div>
           </div>
           <div style="margin-top: 14px; padding-top: 14px; border-top: 2px dashed var(--line-strong);">
-            <p style="font-family: var(--font-hand); font-size: 16px; color: var(--ink-faint); margin-bottom: 10px;">Live demo controls</p>
-            <button class="btn btn-leaf" onclick="location.reload()" style="width:100%; margin-bottom:8px;">↻ Reset Demo Data</button>
-            <p style="font-size:12px; color:var(--ink-faint);">Your changes are temporary in this live demo and reset when the page is refreshed.</p>
+            <p style="font-family: var(--font-hand); font-size: 16px; color: var(--ink-faint); margin-bottom: 10px;">Demo data for screenshots and testing</p>
+            <button class="btn btn-leaf" onclick="loadDemoData()" style="width:100%; margin-bottom:8px;">✨ Load Demo Data</button>
+            <button class="btn btn-secondary" onclick="clearDemoData()" style="width:100%;">Unload / Clear Demo Data</button>
           </div>
         </div>
 
@@ -4190,17 +4222,18 @@
 
         <div class="setting-group">
           <h3>💾 Data Management</h3>
-          <div class="demo-lock-card">
-            <strong>Available in the full version</strong>
-            <p>Permanent browser saving, full JSON backup/restore, roster CSV export, and private offline use are included after purchase.</p>
-            <a class="live-demo-etsy" href="https://www.etsy.com/listing/4504352305/digital-teacher-planner-classroom" target="_blank" rel="noopener">Get the Full Planner →</a>
-          </div>
+          <p style="font-family: var(--font-hand); font-size: 16px; color: var(--ink-faint); margin-bottom: 10px;">Back up everything · restore from a file</p>
+          <button class="btn btn-leaf" onclick="exportData()" style="width:100%; margin-bottom:8px;">⬇ Export Full Backup (.json)</button>
+          <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)" />
+          <button class="btn btn-sky" onclick="document.getElementById('importFile').click()" style="width:100%; margin-bottom:8px; color:white;">⬆ Import Backup (.json)</button>
+          <button class="btn btn-secondary" onclick="exportCSV()" style="width:100%; margin-bottom:8px;">📊 Export Roster as CSV</button>
+          <button class="btn btn-tomato" onclick="resetAll()" style="width:100%;">🗑️ Reset Everything</button>
         </div>
 
         <div class="setting-group">
           <h3>ℹ️ About</h3>
-          <p style="font-family: var(--font-body); font-size: 14px; color: var(--ink-soft); margin-bottom: 8px;">Teacher Planner · Live Demo · TheCalmMindLab</p>
-          <p style="font-family: var(--font-hand); font-size: 17px; color: var(--ink);">Explore the planner with sample data. Changes reset when you refresh the live demo.</p>
+          <p style="font-family: var(--font-body); font-size: 14px; color: var(--ink-soft); margin-bottom: 8px;">Plan · Teach · Doodle v2.5 · Shared Calendar + Weekly Focus/Colour Update</p>
+          <p style="font-family: var(--font-hand); font-size: 17px; color: var(--ink);">Your data lives only in your browser. We never see it. Export backups regularly!</p>
         </div>
       </div>
     </section>
@@ -4235,7 +4268,6 @@
   /* ─────────────────────────────────────────────
      STATE & PERSISTENCE (localStorage)
   ────────────────────────────────────────────── */
-  const DEMO_MODE = true;
   const STORAGE_KEY = 'ptd_planner_v2';
   const DEFAULT_PERIODS = [
     {label: 'P1', time: '8:30'},
@@ -4265,12 +4297,14 @@
       seating: [],
       homework: [],
       reading: [],
+      behavior: [],
       contacts: [],
       unitPlans: [],
       curriculumMap: [],
       interventions: [],
       smallGroups: [],
-      events: {} // monthly calendar events  { 'YYYY-MM-DD': ['event1','event2'] }
+      events: {}, // legacy monthly calendar events  { 'YYYY-MM-DD': ['event1','event2'] }
+      calendarEvents: [] // enhanced events with class/all/selected scope
     };
   }
 
@@ -4281,6 +4315,7 @@
     textSize: '15',
     schoolYear: { start: '', end: '', winter: '', spring: '' },
     periods: [...DEFAULT_PERIODS],
+    showWeekends: false,
     classes: [],
     activeClassId: null,
     weekOffset: 0,
@@ -4291,9 +4326,13 @@
     onboarded: false
   };
 
+  const DEMO_MODE = true;
+
   function save() {
+    // Demo version: keep changes in the current browser session only.
+    // No localStorage write is performed. Refreshing/closing resets the demo.
     if (DEMO_MODE) {
-      showToast('Demo change applied · resets on refresh');
+      showToast('Demo mode: changes are temporary only');
       return;
     }
     try {
@@ -4305,7 +4344,10 @@
   }
 
   function load() {
-    if (DEMO_MODE) return;
+    if (DEMO_MODE) {
+      // Always start from clean demo data. Do not read user/device storage.
+      return;
+    }
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
@@ -4319,6 +4361,8 @@
 
 
   function migratePlannerData() {
+    if (!Array.isArray(STATE.periods) || !STATE.periods.length) STATE.periods = [...DEFAULT_PERIODS];
+    if (typeof STATE.showWeekends === 'undefined') STATE.showWeekends = false;
     if (!STATE.classes) STATE.classes = [];
     STATE.classes.forEach(cls => {
       cls.weekPlan = cls.weekPlan || {};
@@ -4327,6 +4371,13 @@
       cls.curriculumMap = cls.curriculumMap || [];
       cls.interventions = cls.interventions || [];
       cls.smallGroups = cls.smallGroups || [];
+      cls.behavior = cls.behavior || [];
+      cls.calendarEvents = Array.isArray(cls.calendarEvents) ? cls.calendarEvents : [];
+      cls.calendarEvents.forEach(ev => {
+        if (!ev.scope) ev.scope = 'class';
+        if (!Array.isArray(ev.classIds)) ev.classIds = ev.scope === 'selected' ? [cls.id] : [];
+        if (!ev.ownerClassId) ev.ownerClassId = cls.id;
+      });
       cls.gradebook = cls.gradebook || { assignments: [], scores: {} };
       cls.gradebook.assignments = cls.gradebook.assignments || [];
       cls.gradebook.scores = cls.gradebook.scores || {};
@@ -4432,6 +4483,7 @@
     if (page === 'birthdays') renderBirthdays();
     if (page === 'homework') { populateStudentDropdowns(); renderHomework(); }
     if (page === 'reading') { populateStudentDropdowns(); renderReading(); }
+    if (page === 'behavior') { populateStudentDropdowns(); renderBehavior(); }
     if (page === 'contacts') { populateStudentDropdowns(); renderContacts(); }
     if (page === 'calendar') renderMonth();
     if (page === 'goals') renderGoals();
@@ -4502,10 +4554,10 @@
     document.getElementById('quoteAuthor').textContent = '— ' + QUOTES[idx].a;
 
     // Today's schedule pulled from week plan
-    const dayKey = today.getDay() - 1; // Mon=0
+    const dayKey = jsDayToPlannerIndex(today.getDay());
     const cls = activeClass();
     let schedule = [];
-    if (dayKey >= 0 && dayKey < 5 && cls) {
+    if (dayKey >= 0 && cls) {
       schedule = STATE.periods.map((p, pi) => {
         const planKey = `${cls.id}-0-${pi}-${dayKey}`;
         const text = cls.weekPlan[planKey] || '';
@@ -4682,10 +4734,11 @@
     const cls = activeClass();
     const l = (cls.lessonBank || []).find(x => x.id === id);
     if (!l) return;
-    const day = prompt('Which day? Type Mon, Tue, Wed, Thu, or Fri:', 'Mon');
+    const day = prompt(`Which day? Type ${plannerDayLabelList()}:`, 'Mon');
     if (!day) return;
-    const di = DAYS.findIndex(d => d.toLowerCase() === day.trim().slice(0,3).toLowerCase());
-    if (di < 0) return alert('Please enter Mon, Tue, Wed, Thu, or Fri.');
+    const availableDays = plannerDays();
+    const di = availableDays.findIndex(d => d.toLowerCase() === day.trim().slice(0,3).toLowerCase());
+    if (di < 0) return alert(`Please enter one of: ${plannerDayLabelList()}.`);
     const period = prompt('Which period number? Example: 1 for P1, 2 for P2:', '1');
     const pi = Math.max(0, Math.min(STATE.periods.length-1, parseInt(period,10)-1));
     const key = `${cls.id}-${STATE.weekOffset}-${pi}-${di}`;
@@ -4717,8 +4770,9 @@
     const lesson = cls.weekPlan[key];
     if (!lesson) return;
     let newWeek = week, newPi = pi, newDi = di;
-    if (direction === 'nextDay') { newDi = di + 1; if (newDi > 4) { newDi = 0; newWeek = week + 1; } }
-    if (direction === 'prevDay') { newDi = di - 1; if (newDi < 0) { newDi = 4; newWeek = week - 1; } }
+    const maxDayIndex = plannerDays().length - 1;
+    if (direction === 'nextDay') { newDi = di + 1; if (newDi > maxDayIndex) { newDi = 0; newWeek = week + 1; } }
+    if (direction === 'prevDay') { newDi = di - 1; if (newDi < 0) { newDi = maxDayIndex; newWeek = week - 1; } }
     if (direction === 'nextWeek') { newWeek = week + 1; }
     const newKey = `${cls.id}-${newWeek}-${newPi}-${newDi}`;
     if (cls.weekPlan[newKey] && !confirm('That slot already has a lesson. Replace it?')) return;
@@ -4733,18 +4787,40 @@
      WEEKLY PLANNER
   ────────────────────────────────────────────── */
   const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+  const WEEKEND_DAYS = ['Sat', 'Sun'];
+  function plannerDays() {
+    return STATE.showWeekends ? DAYS.concat(WEEKEND_DAYS) : DAYS;
+  }
+  function plannerDayLabelList() {
+    return plannerDays().join(', ');
+  }
+  function setPlannerGridColumns(grid, days) {
+    if (grid) {
+      grid.style.gridTemplateColumns = `80px repeat(${days.length}, minmax(0, 1fr))`;
+      grid.style.setProperty('--planner-day-count', String(days.length));
+    }
+  }
+  function jsDayToPlannerIndex(jsDay) {
+    // JavaScript: Sun=0, Mon=1 ... Sat=6. Planner: Mon=0 ... Fri=4, Sat=5, Sun=6 when weekends are enabled.
+    if (jsDay >= 1 && jsDay <= 5) return jsDay - 1;
+    if (STATE.showWeekends && jsDay === 6) return 5;
+    if (STATE.showWeekends && jsDay === 0) return 6;
+    return -1;
+  }
 
   function renderWeek() {
     const grid = document.getElementById('weekGrid');
     const cls = activeClass();
     if (!cls) { grid.innerHTML = '<div style="padding:30px;text-align:center;">Create a class first</div>'; return; }
 
+    const days = plannerDays();
+    setPlannerGridColumns(grid, days);
     let html = '<div class="week-cell head">Period</div>';
-    DAYS.forEach(d => html += `<div class="week-cell head">${d}</div>`);
+    days.forEach(d => html += `<div class="week-cell head">${d}</div>`);
 
     STATE.periods.forEach((p, pi) => {
       html += `<div class="week-cell period">${p.label}<br><span style="font-size: 11px; font-weight: 400;">${p.time}</span></div>`;
-      DAYS.forEach((d, di) => {
+      days.forEach((d, di) => {
         const key = `${cls.id}-${STATE.weekOffset}-${pi}-${di}`;
         const val = cls.weekPlan[key] || '';
         const hasLesson = !!val;
@@ -4765,9 +4841,10 @@
 
     const monday = new Date();
     monday.setDate(monday.getDate() - monday.getDay() + 1 + (STATE.weekOffset * 7));
-    const friday = new Date(monday); friday.setDate(friday.getDate() + 4);
+    const daysForLabel = plannerDays();
+    const endDate = new Date(monday); endDate.setDate(endDate.getDate() + daysForLabel.length - 1);
     const m = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    let label = `${m[monday.getMonth()]} ${monday.getDate()} – ${m[friday.getMonth()]} ${friday.getDate()}`;
+    let label = `${m[monday.getMonth()]} ${monday.getDate()} – ${m[endDate.getMonth()]} ${endDate.getDate()}`;
     if (STATE.weekOffset === 0) label = '📍 This Week · ' + label;
     document.getElementById('weekLabel').textContent = label;
   }
@@ -4880,6 +4957,7 @@
   function renderRoster() {
     const body = document.getElementById('rosterBody');
     const cls = activeClass();
+    renderRosterTools();
     if (!cls || !cls.students.length) {
       body.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 40px; font-family: var(--font-hand); font-size: 19px; color: var(--ink-faint);">No students yet — add one above or load the demo 👆</td></tr>`;
       return;
@@ -4915,13 +4993,58 @@
     }).join('');
   }
 
+  function normalizeStudentName(name) {
+    return String(name || '').trim().replace(/\s+/g, ' ').toLowerCase();
+  }
+
+  function studentExistsInClass(cls, name) {
+    const key = normalizeStudentName(name);
+    return !!(cls && Array.isArray(cls.students) && cls.students.some(s => normalizeStudentName(s.name) === key));
+  }
+
+  function makeStudentRecord(name, sourceStudent) {
+    return {
+      name: String(name || '').trim().replace(/\s+/g, ' '),
+      grades: [],
+      att: '',
+      iep: !!(sourceStudent && sourceStudent.iep),
+      bday: sourceStudent && sourceStudent.bday ? sourceStudent.bday : ''
+    };
+  }
+
+  function renderRosterTools() {
+    const targetSelect = document.getElementById('rosterCopyTargets');
+    if (!targetSelect) return;
+    const active = activeClass();
+    const targets = (STATE.classes || []).filter(c => !active || c.id !== active.id);
+    if (!targets.length) {
+      targetSelect.innerHTML = '<option disabled>No other classes/subjects yet</option>';
+      targetSelect.disabled = true;
+      return;
+    }
+    targetSelect.disabled = false;
+    targetSelect.innerHTML = targets.map(c => `<option value="${c.id}">${escapeHtml(c.name)}</option>`).join('');
+  }
+
+  function parseBulkStudentNames(raw) {
+    return String(raw || '')
+      .split(/\n|\r|;/)
+      .map(v => v.trim().replace(/^[-•*\d.)\s]+/, '').replace(/\s+/g, ' '))
+      .filter(Boolean)
+      .filter((name, index, arr) => arr.findIndex(n => normalizeStudentName(n) === normalizeStudentName(name)) === index);
+  }
+
   function addStudent() {
     const inp = document.getElementById('newStudent');
     const bday = document.getElementById('newStudentBday').value;
-    const name = inp.value.trim();
+    const name = inp.value.trim().replace(/\s+/g, ' ');
     if (!name) return;
     const cls = activeClass();
     if (!cls) return;
+    if (studentExistsInClass(cls, name)) {
+      showToast('Student already exists in this class');
+      return;
+    }
     cls.students.push({name, grades: [], att: '', iep: false, bday: bday || ''});
     inp.value = '';
     document.getElementById('newStudentBday').value = '';
@@ -4930,6 +5053,67 @@
     document.getElementById('statStudents').textContent = cls.students.length;
   }
   document.getElementById('newStudent').addEventListener('keydown', e => { if (e.key === 'Enter') addStudent(); });
+
+  function bulkAddStudents() {
+    const cls = activeClass();
+    const textarea = document.getElementById('bulkStudentList');
+    if (!cls || !textarea) return;
+    const names = parseBulkStudentNames(textarea.value);
+    if (!names.length) {
+      showToast('Paste student names first');
+      return;
+    }
+    let added = 0;
+    let skipped = 0;
+    names.forEach(name => {
+      if (studentExistsInClass(cls, name)) {
+        skipped++;
+        return;
+      }
+      cls.students.push(makeStudentRecord(name));
+      added++;
+    });
+    textarea.value = '';
+    renderRoster();
+    populateStudentDropdowns();
+    save();
+    const stat = document.getElementById('statStudents');
+    if (stat) stat.textContent = cls.students.length;
+    showToast(`${added} students added${skipped ? ` · ${skipped} skipped` : ''}`);
+  }
+
+  function copyRosterToSelectedClasses() {
+    const source = activeClass();
+    const select = document.getElementById('rosterCopyTargets');
+    if (!source || !select) return;
+    if (!source.students || !source.students.length) {
+      showToast('Current roster is empty');
+      return;
+    }
+    const targetIds = Array.from(select.selectedOptions).map(opt => opt.value);
+    if (!targetIds.length) {
+      showToast('Select at least one target class');
+      return;
+    }
+    let copied = 0;
+    let skipped = 0;
+    targetIds.forEach(id => {
+      const target = STATE.classes.find(c => c.id === id);
+      if (!target) return;
+      target.students = target.students || [];
+      source.students.forEach(s => {
+        if (studentExistsInClass(target, s.name)) {
+          skipped++;
+          return;
+        }
+        target.students.push(makeStudentRecord(s.name, s));
+        copied++;
+      });
+    });
+    renderRosterTools();
+    save();
+    showToast(`${copied} students copied${skipped ? ` · ${skipped} duplicates skipped` : ''}`);
+  }
 
   function removeStudent(i) {
     const cls = activeClass();
@@ -5020,7 +5204,8 @@
       ['Vocabulary Game', 'Math Quiz', 'Book Clubs', 'Experiment Notes', 'Pack-up + Review']
     ];
     STATE.periods.forEach((period, pi) => {
-      for (let di = 0; di < 5; di++) {
+      const days = plannerDays();
+      for (let di = 0; di < days.length; di++) {
         cls.weekPlan[`${cls.id}-0-${pi}-${di}`] = (lessons[pi] && lessons[pi][di]) ? lessons[pi][di] : 'Lesson Plan';
       }
     });
@@ -5079,6 +5264,10 @@
       {date: todayStr, student: demoNames[0], book: 'Charlotte’s Web', minutes: '20', notes: 'Strong fluency'},
       {date: todayStr, student: demoNames[2], book: 'Magic Tree House', minutes: '15', notes: 'Needs vocabulary support'}
     ];
+    cls.behavior = [
+      {date: todayStr, student: demoNames[3], type: 'Positive', note: 'Stayed focused during small group and helped a classmate get started.'},
+      {date: tomorrowStr, student: demoNames[6], type: 'Follow-up', note: 'Check in after recess and document any support needed before math block.'}
+    ];
     cls.contacts = [
       {date: todayStr, student: demoNames[1], type: 'Email', note: 'Shared positive participation note'},
       {date: tomorrowStr, student: demoNames[5], type: 'Phone', note: 'Follow-up about missing homework'}
@@ -5088,6 +5277,10 @@
       [tomorrowStr]: ['Library visit'],
       [nextWeekStr]: ['Parent conference reminders']
     };
+    cls.calendarEvents = [
+      {id:'ce' + Date.now() + 'school', title:'School-wide planning day', details:'Shared calendar example visible across all classes.', url:'', start:todayStr, end:todayStr, periodIndex:null, syncToWeek:false, scope:'all', classIds:[], ownerClassId:cls.id, createdAt:new Date().toISOString()},
+      {id:'ce' + Date.now() + 'class', title:'Class library visit', details:'Class-only calendar example.', url:'', start:tomorrowStr, end:tomorrowStr, periodIndex:null, syncToWeek:false, scope:'class', classIds:[], ownerClassId:cls.id, createdAt:new Date().toISOString()}
+    ];
     cls.seating = cls.students.map(s => s.name);
 
     STATE.goals = [
@@ -5118,12 +5311,14 @@
     cls.seating = [];
     cls.homework = [];
     cls.reading = [];
+    cls.behavior = [];
     cls.contacts = [];
     cls.unitPlans = [];
     cls.curriculumMap = [];
     cls.interventions = [];
     cls.smallGroups = [];
     cls.events = {};
+    cls.calendarEvents = [];
     STATE.goals = [];
     STATE.notes = '';
     STATE.weekOffset = 0;
@@ -5747,7 +5942,7 @@
       hwEl.innerHTML = '<option value="all">Whole Class</option>' + students.map((s, i) => `<option value="${i}">${escapeHtml(s.name)}</option>`).join('');
     }
 
-    ['rdStudent','ctStudent'].forEach(id => {
+    ['rdStudent','bhStudent','ctStudent'].forEach(id => {
       const el = document.getElementById(id);
       if (!el) return;
       el.innerHTML = '<option value="">— Student —</option>' + students.map((s, i) => `<option value="${i}">${escapeHtml(s.name)}</option>`).join('');
@@ -5960,6 +6155,53 @@
     }).join('');
   }
   function removeRd(i) { activeClass().reading.splice(i, 1); renderReading(); save(); }
+
+  function addBehavior() {
+    const cls = activeClass();
+    if (!cls) return;
+    cls.behavior = cls.behavior || [];
+    const sIdx = document.getElementById('bhStudent').value;
+    const date = document.getElementById('bhDate').value || new Date().toISOString().slice(0,10);
+    const type = document.getElementById('bhType').value.trim();
+    const note = document.getElementById('bhNote').value.trim();
+    if (sIdx === '' || !note) { showToast('Pick a student & add behavior notes'); return; }
+    cls.behavior.push({date, student: cls.students[sIdx].name, type, note});
+    document.getElementById('bhType').value = '';
+    document.getElementById('bhNote').value = '';
+    renderBehavior();
+    save();
+  }
+
+  function renderBehavior() {
+    const list = document.getElementById('bhList');
+    if (!list) return;
+    const cls = activeClass();
+    if (!cls) return;
+    cls.behavior = cls.behavior || [];
+    if (!cls.behavior.length) {
+      list.innerHTML = '<p style="padding:30px;text-align:center;font-family:var(--font-hand);font-size:19px;color:var(--ink-faint);">No behavior notes logged yet 📝</p>';
+      return;
+    }
+    list.innerHTML = [...cls.behavior].reverse().map((b, i) => {
+      const idx = cls.behavior.length - 1 - i;
+      const label = b.type ? `<span style="display:inline-block;margin-left:6px;padding:2px 8px;border:1.5px solid var(--ink);border-radius:999px;background:var(--grape-soft);font-family:var(--font-mark);font-size:12px;">${escapeHtml(b.type)}</span>` : '';
+      return `<div class="log-entry" style="grid-template-columns: 110px 170px 1fr auto; align-items:start;">
+        <span class="log-date">${escapeHtml(b.date || '')}</span>
+        <span><strong>${escapeHtml(b.student || '')}</strong>${label}</span>
+        <span>${escapeHtml(b.note || '')}</span>
+        <button class="btn btn-secondary btn-sm" onclick="removeBehavior(${idx})">×</button>
+      </div>`;
+    }).join('');
+  }
+
+  function removeBehavior(i) {
+    const cls = activeClass();
+    if (!cls) return;
+    cls.behavior = cls.behavior || [];
+    cls.behavior.splice(i, 1);
+    renderBehavior();
+    save();
+  }
 
   function addContact() {
     const cls = activeClass();
@@ -7021,12 +7263,15 @@
     document.getElementById('setWinter').value = STATE.schoolYear.winter || '';
     document.getElementById('setSpring').value = STATE.schoolYear.spring || '';
     document.getElementById('setTextSize').value = STATE.textSize || '15';
+    const weekendToggle = document.getElementById('setShowWeekends');
+    if (weekendToggle) weekendToggle.checked = !!STATE.showWeekends;
     document.querySelectorAll('.theme-swatch').forEach(s => s.classList.toggle('active', s.dataset.theme === STATE.theme));
     renderPeriods();
   }
   function renderPeriods() {
     const list = document.getElementById('periodList');
-    list.innerHTML = STATE.periods.map((p, i) => `
+    if (!list) return;
+    list.innerHTML = `<p style="font-family: var(--font-hand); font-size: 15px; color: var(--ink-faint); margin-bottom: 8px;">Add as many class periods as your schedule needs. Rename each period and add times if you like.</p>` + STATE.periods.map((p, i) => `
       <div style="display:flex; gap:8px; margin-bottom:6px; align-items:center;">
         <input class="input" style="width:80px;" value="${p.label}" onchange="STATE.periods[${i}].label=this.value; save(); renderWeek();" />
         <input class="input" style="width:100px;" value="${p.time}" onchange="STATE.periods[${i}].time=this.value; save(); renderWeek();" />
@@ -7034,13 +7279,21 @@
       </div>
     `).join('');
   }
+  function toggleWeekends(show) {
+    STATE.showWeekends = !!show;
+    save();
+    renderWeek();
+    setupDashboard();
+    showToast(STATE.showWeekends ? 'Weekends added to planner' : 'Weekends hidden from planner');
+  }
   function addPeriod() {
     STATE.periods.push({label: 'P' + (STATE.periods.length+1), time: ''});
-    save(); renderPeriods(); renderWeek();
+    save(); renderPeriods(); renderWeek(); setupDashboard();
   }
   function removePeriod(i) {
+    if (STATE.periods.length <= 1) return alert('Keep at least one period.');
     STATE.periods.splice(i, 1);
-    save(); renderPeriods(); renderWeek();
+    save(); renderPeriods(); renderWeek(); setupDashboard();
   }
 
   function setTheme(el) {
@@ -7074,63 +7327,23 @@
   });
 
   function exportData() {
-    if (DEMO_MODE) { showToast('Backup & restore are included in the full version'); return; }
-    const blob = new Blob([JSON.stringify(STATE, null, 2)], {type: 'application/json'});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'planner-backup-' + new Date().toISOString().slice(0,10) + '.json';
-    a.click();
-    URL.revokeObjectURL(url);
-    showToast('Backup downloaded ⬇');
+    alert('Demo mode: backup/export is disabled. Please purchase the full version to save and export your own planner data.');
+    showToast('Demo mode: export disabled');
   }
 
   function importData(event) {
-    if (DEMO_MODE) { showToast('Backup & restore are included in the full version'); return; }
-    const file = event.target.files[0];
-    if (!file) return;
-    if (!confirm('Importing will replace ALL current data. Backup first? Cancel to back up, OK to proceed.')) return;
-    const reader = new FileReader();
-    reader.onload = e => {
-      try {
-        const parsed = JSON.parse(e.target.result);
-        STATE = parsed;
-        save();
-        showToast('Imported successfully 🎉');
-        setTimeout(() => location.reload(), 500);
-      } catch(err) {
-        showToast('Import failed: invalid file');
-      }
-    };
-    reader.readAsText(file);
+    alert('Demo mode: import/restore is disabled in this preview. Please purchase the full version to use backup and restore.');
+    if (event && event.target) event.target.value = '';
+    showToast('Demo mode: import disabled');
   }
 
   function exportCSV() {
-    if (DEMO_MODE) { showToast('CSV export is included in the full version'); return; }
-    const cls = activeClass();
-    if (!cls || !cls.students.length) { showToast('No students to export'); return; }
-    let csv = 'Name,Birthday,Latest Grade,Average,IEP,Attendance Today\n';
-    cls.students.forEach(s => {
-      const grades = s.grades || [];
-      const avg = grades.length ? Math.round(grades.reduce((a,b)=>a+b,0)/grades.length) : '';
-      const last = grades.length ? grades[grades.length-1] : '';
-      csv += `"${s.name}","${s.bday||''}","${last}","${avg}","${s.iep?'YES':''}","${s.att||''}"\n`;
-    });
-    const blob = new Blob([csv], {type: 'text/csv'});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${cls.name.replace(/\s+/g,'_')}-roster.csv`;
-    a.click();
-    URL.revokeObjectURL(url);
-    showToast('CSV downloaded ⬇');
+    alert('Demo mode: CSV export is disabled. Please purchase the full version to export roster data.');
+    showToast('Demo mode: CSV export disabled');
   }
 
   function resetAll() {
-    if (DEMO_MODE) { location.reload(); return; }
-    if (!confirm('Delete ALL data? This cannot be undone (unless you have a backup).')) return;
-    if (!confirm('Are you absolutely sure? Last chance!')) return;
-    localStorage.removeItem(STORAGE_KEY);
+    alert('Demo mode: reset simply reloads the sample demo planner.');
     location.reload();
   }
 
@@ -7259,10 +7472,12 @@
 
   function weeklyDayIndex(dateKey) {
     const day = parseDateKey(dateKey).getDay();
-    return day >= 1 && day <= 5 ? day - 1 : -1;
+    return jsDayToPlannerIndex(day);
   }
 
   function ensurePlannerEnhancements() {
+    if (!Array.isArray(STATE.periods) || !STATE.periods.length) STATE.periods = [...DEFAULT_PERIODS];
+    if (typeof STATE.showWeekends === 'undefined') STATE.showWeekends = false;
     STATE.classes = STATE.classes || [];
     STATE.classes.forEach(cls => {
       cls.todos = cls.todos || [];
@@ -7270,11 +7485,18 @@
       cls.calendarEvents = cls.calendarEvents || [];
       cls.weekPlan = cls.weekPlan || {};
       cls.events = cls.events || {};
+      cls.calendarEvents = Array.isArray(cls.calendarEvents) ? cls.calendarEvents : [];
+      cls.calendarEvents.forEach(ev => {
+        if (!ev.scope) ev.scope = 'class';
+        if (!Array.isArray(ev.classIds)) ev.classIds = ev.scope === 'selected' ? [cls.id] : [];
+        if (!ev.ownerClassId) ev.ownerClassId = cls.id;
+      });
       cls.lessonBank = cls.lessonBank || [];
       cls.unitPlans = cls.unitPlans || [];
       cls.curriculumMap = cls.curriculumMap || [];
       cls.interventions = cls.interventions || [];
       cls.smallGroups = cls.smallGroups || [];
+      cls.behavior = cls.behavior || [];
     });
   }
 
@@ -7288,6 +7510,7 @@
     if (page === 'birthdays') renderBirthdays();
     if (page === 'homework') { populateStudentDropdowns(); renderHomework(); }
     if (page === 'reading') { populateStudentDropdowns(); renderReading(); }
+    if (page === 'behavior') { populateStudentDropdowns(); renderBehavior(); }
     if (page === 'contacts') { populateStudentDropdowns(); renderContacts(); }
     if (page === 'lessonbank') renderLessonBank();
     if (page === 'unitplans') renderUnitPlans();
@@ -7410,10 +7633,11 @@
     ensurePlannerEnhancements();
     const l = (cls.lessonBank || []).find(x => x.id === id);
     if (!l) return;
-    const day = prompt('Which day? Type Mon, Tue, Wed, Thu, or Fri:', 'Mon');
+    const day = prompt(`Which day? Type ${plannerDayLabelList()}:`, 'Mon');
     if (!day) return;
-    const di = DAYS.findIndex(d => d.toLowerCase() === day.trim().slice(0,3).toLowerCase());
-    if (di < 0) return alert('Please enter Mon, Tue, Wed, Thu, or Fri.');
+    const availableDays = plannerDays();
+    const di = availableDays.findIndex(d => d.toLowerCase() === day.trim().slice(0,3).toLowerCase());
+    if (di < 0) return alert(`Please enter one of: ${plannerDayLabelList()}.`);
     const period = prompt('Which period number? Example: 1 for P1, 2 for P2:', '1');
     const pi = Math.max(0, Math.min(STATE.periods.length-1, parseInt(period,10)-1));
     const key = `${cls.id}-${STATE.weekOffset}-${pi}-${di}`;
@@ -7570,7 +7794,7 @@
       wrap.innerHTML = `<div class="card"><p style="text-align:center;font-family:var(--font-hand);font-size:20px;color:var(--ink-faint);">No recurring items yet. Add recess, lunch, morning meeting, or any repeated lesson above 🔁</p></div>`;
       return;
     }
-    const dayNames = {1:'Mon',2:'Tue',3:'Wed',4:'Thu',5:'Fri'};
+    const dayNames = {0:'Sun',1:'Mon',2:'Tue',3:'Wed',4:'Thu',5:'Fri',6:'Sat'};
     wrap.innerHTML = cls.recurringItems.map(item => {
       const p = STATE.periods[item.periodIndex] || {};
       return `<div class="recurring-item">
@@ -7597,18 +7821,79 @@
     renderRecurringList();
   }
 
-  /* Calendar: multi-day events + drag + sync to weekly */
+  /* Calendar: multi-day events + drag + sync to weekly + shared class scope */
   let calendarRangeStart = null;
   let calendarDraggingEventId = null;
 
-  function getCalendarEventsForDate(cls, dateKey) {
+  function calendarEventAppliesToClass(ev, classId) {
+    const scope = ev.scope || 'class';
+    const owner = ev.ownerClassId || ev.classId;
+    if (scope === 'all') return true;
+    if (scope === 'selected') return Array.isArray(ev.classIds) && ev.classIds.includes(classId);
+    return owner === classId;
+  }
+
+  function calendarEventSourceClass(ev) {
+    const owner = ev.ownerClassId || ev.classId || STATE.activeClassId;
+    return STATE.classes.find(c => c.id === owner) || activeClass();
+  }
+
+  function getVisibleCalendarEventRecordsForDate(dateKey) {
+    const active = activeClass();
+    if (!active) return [];
+    const activeId = active.id;
     const out = [];
-    (cls.calendarEvents || []).forEach(ev => {
-      if (isBetweenKeys(dateKey, ev.start, ev.end || ev.start)) out.push(ev);
+    STATE.classes.forEach(sourceClass => {
+      sourceClass.calendarEvents = Array.isArray(sourceClass.calendarEvents) ? sourceClass.calendarEvents : [];
+      sourceClass.calendarEvents.forEach(ev => {
+        if (!ev.ownerClassId) ev.ownerClassId = sourceClass.id;
+        if (!ev.scope) ev.scope = 'class';
+        if (calendarEventAppliesToClass(ev, activeId) && isBetweenKeys(dateKey, ev.start, ev.end || ev.start)) {
+          out.push({...ev, sourceClassId: sourceClass.id, sourceClassName: sourceClass.name});
+        }
+      });
+      // Legacy simple events stay class-only so old buyer data remains safe.
+      if (sourceClass.id === activeId) {
+        const legacy = (sourceClass.events && sourceClass.events[dateKey]) ? sourceClass.events[dateKey] : [];
+        legacy.forEach((title, i) => out.push({id: 'legacy-' + dateKey + '-' + i, title: String(title), start: dateKey, end: dateKey, legacy:true, scope:'class', sourceClassId: sourceClass.id, sourceClassName: sourceClass.name}));
+      }
     });
-    const legacy = (cls.events && cls.events[dateKey]) ? cls.events[dateKey] : [];
-    legacy.forEach((title, i) => out.push({id: 'legacy-' + dateKey + '-' + i, title: String(title), start: dateKey, end: dateKey, legacy:true}));
     return out;
+  }
+
+  // Backward-compatible alias used by older calendar code.
+  function getCalendarEventsForDate(cls, dateKey) {
+    return getVisibleCalendarEventRecordsForDate(dateKey);
+  }
+
+  function classOptionsList(selectedIds) {
+    selectedIds = selectedIds || [];
+    return STATE.classes.map(c => `${selectedIds.includes(c.id) ? '✓ ' : ''}${c.name}`).join('\n');
+  }
+
+  function chooseCalendarScope(defaultScope, defaultClassIds) {
+    const active = activeClass();
+    const answer = prompt(
+      'Should this calendar event show for:\n1 = This class only\n2 = All classes\n3 = Selected classes',
+      defaultScope === 'all' ? '2' : (defaultScope === 'selected' ? '3' : '1')
+    );
+    if (!answer) return null;
+    const a = String(answer).trim().toLowerCase();
+    if (a === '2' || a.includes('all')) return {scope:'all', classIds:[]};
+    if (a === '3' || a.includes('selected')) {
+      const names = prompt('Type the class numbers to include, separated by commas.\n\n' + STATE.classes.map((c,i)=>`${i+1}. ${c.name}`).join('\n'), (defaultClassIds || [active.id]).map(id => Math.max(1, STATE.classes.findIndex(c => c.id === id)+1)).join(','));
+      if (!names) return null;
+      const classIds = names.split(',').map(x => parseInt(x.trim(),10)-1).filter(i => i >= 0 && i < STATE.classes.length).map(i => STATE.classes[i].id);
+      if (!classIds.length) { alert('No valid classes selected. Event was not added.'); return null; }
+      return {scope:'selected', classIds:[...new Set(classIds)]};
+    }
+    return {scope:'class', classIds:[]};
+  }
+
+  function scopeLabel(ev) {
+    if ((ev.scope || 'class') === 'all') return 'All classes';
+    if (ev.scope === 'selected') return 'Selected classes';
+    return ev.sourceClassName && ev.sourceClassName !== (activeClass() && activeClass().name) ? ev.sourceClassName : '';
   }
 
   function renderMonth() {
@@ -7628,17 +7913,18 @@
 
     let html = '';
     ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(d => html += `<div class="month-cell head">${d}</div>`);
-    const cls = activeClass();
     const prevMonth = new Date(year, month, 0).getDate();
     for (let i = startOffset - 1; i >= 0; i--) html += `<div class="month-cell other"><div class="month-day">${prevMonth - i}</div></div>`;
 
     for (let d = 1; d <= lastDay.getDate(); d++) {
       const key = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
       const isToday = key === todayKey;
-      const evs = cls ? getCalendarEventsForDate(cls, key) : [];
+      const evs = getVisibleCalendarEventRecordsForDate(key);
       let evHtml = evs.slice(0, 3).map(ev => {
         const multi = daysBetweenInclusive(ev.start, ev.end || ev.start) > 1;
-        return `<div class="month-event calendar-event-chip ${multi ? 'multi-day' : ''} ${ev.syncToWeek ? 'synced' : ''}" draggable="${ev.legacy ? 'false' : 'true'}" onclick="editCalendarEvent(event,'${ev.id}')" ondragstart="dragCalendarEvent(event,'${ev.id}')">${escapeHtml(ev.title)}${multi ? `<small>${escapeHtml(ev.start)} → ${escapeHtml(ev.end || ev.start)}</small>` : ''}</div>`;
+        const sharedClass = (ev.scope || 'class') === 'all' ? 'shared-event' : (ev.scope === 'selected' ? 'selected-event' : '');
+        const label = scopeLabel(ev);
+        return `<div class="month-event calendar-event-chip ${multi ? 'multi-day' : ''} ${ev.syncToWeek ? 'synced' : ''} ${sharedClass}" draggable="${ev.legacy ? 'false' : 'true'}" onclick="editCalendarEvent(event,'${ev.sourceClassId || ''}','${ev.id}')" ondragstart="dragCalendarEvent(event,'${ev.sourceClassId || ''}','${ev.id}')">${escapeHtml(ev.title)}${multi ? `<small>${escapeHtml(ev.start)} → ${escapeHtml(ev.end || ev.start)}</small>` : ''}${label ? `<span class="calendar-scope-label">${escapeHtml(label)}</span>` : ''}</div>`;
       }).join('');
       if (evs.length > 3) evHtml += `<div class="month-event">+${evs.length - 3} more</div>`;
       html += `<div class="month-cell${isToday ? ' today' : ''}" data-date="${key}" onmousedown="startCalendarRange(event,'${key}')" onmouseenter="hoverCalendarRange('${key}')" onmouseup="finishCalendarRange(event,'${key}')" ondragover="allowCalendarDrop(event)" ondragleave="this.classList.remove('drop-target')" ondrop="dropCalendarEvent(event,'${key}')"><div class="month-day">${d}</div>${evHtml}</div>`;
@@ -7686,42 +7972,57 @@
 
   function openCalendarEventDialog(start, end) {
     const cls = activeClass();
+    if (!cls) return;
     ensurePlannerEnhancements();
     const title = prompt(`Event title for ${start}${end !== start ? ' to ' + end : ''}:`);
     if (!title || !title.trim()) return;
     const details = prompt('Optional notes/details:', '') || '';
     const url = prompt('Optional lesson/video/resource link:', '') || '';
+    const scopeInfo = chooseCalendarScope('class', [cls.id]);
+    if (!scopeInfo) return;
     let periodInput = prompt(`Auto-place this event into the Weekly Planner? Enter period number 1-${STATE.periods.length}, or leave blank to skip:`, '');
     let periodIndex = periodInput ? Math.max(0, Math.min(STATE.periods.length-1, parseInt(periodInput,10)-1)) : null;
     if (periodInput && isNaN(periodIndex)) periodIndex = null;
-    const ev = { id:'ce' + Date.now() + Math.floor(Math.random()*1000), title:title.trim(), details:details.trim(), url:safeUrl(url), start, end, periodIndex, syncToWeek: periodIndex !== null, createdAt:new Date().toISOString() };
+    const ev = { id:'ce' + Date.now() + Math.floor(Math.random()*1000), title:title.trim(), details:details.trim(), url:safeUrl(url), start, end, periodIndex, syncToWeek: periodIndex !== null, scope: scopeInfo.scope, classIds: scopeInfo.classIds || [], ownerClassId: cls.id, createdAt:new Date().toISOString() };
+    cls.calendarEvents = Array.isArray(cls.calendarEvents) ? cls.calendarEvents : [];
     cls.calendarEvents.push(ev);
-    if (ev.syncToWeek) syncCalendarEventToWeekly(ev);
+    if (ev.syncToWeek) syncCalendarEventToWeekly(ev, cls);
     save();
     renderMonth();
     renderWeek();
     showToast(ev.syncToWeek ? 'Event added and synced to weekly planner' : 'Event added');
   }
 
-  function editCalendarEvent(e, id) {
+  function editCalendarEvent(e, sourceClassId, id) {
     e.preventDefault();
     e.stopPropagation();
-    const cls = activeClass();
     ensurePlannerEnhancements();
     if (id.startsWith('legacy-')) { showToast('Old simple event. Add new events for multi-day and sync features.'); return; }
-    const ev = (cls.calendarEvents || []).find(x => x.id === id);
+    const sourceClass = STATE.classes.find(c => c.id === sourceClassId) || activeClass();
+    if (!sourceClass) return;
+    const ev = (sourceClass.calendarEvents || []).find(x => x.id === id);
     if (!ev) return;
-    const action = prompt('Type edit to update, delete to remove, or open to open the link:', 'edit');
+    const action = prompt('Type edit to update, scope to change class visibility, delete to remove, or open to open the link:', 'edit');
     if (!action) return;
-    if (action.toLowerCase().startsWith('open')) {
+    const lower = action.toLowerCase();
+    if (lower.startsWith('open')) {
       if (isValidUrl(ev.url)) window.open(safeUrl(ev.url), '_blank');
       else showToast('No link saved for this event');
       return;
     }
-    if (action.toLowerCase().startsWith('delete')) {
+    if (lower.startsWith('delete')) {
       if (!confirm('Delete this calendar event? Weekly copies already created will stay in the weekly planner.')) return;
-      cls.calendarEvents = cls.calendarEvents.filter(x => x.id !== id);
-      save(); renderMonth(); return;
+      sourceClass.calendarEvents = sourceClass.calendarEvents.filter(x => x.id !== id);
+      save(); renderMonth(); renderWeek(); return;
+    }
+    if (lower.startsWith('scope')) {
+      const scopeInfo = chooseCalendarScope(ev.scope || 'class', ev.classIds || []);
+      if (!scopeInfo) return;
+      ev.scope = scopeInfo.scope;
+      ev.classIds = scopeInfo.classIds || [];
+      if (!ev.ownerClassId) ev.ownerClassId = sourceClass.id;
+      if (ev.syncToWeek) syncCalendarEventToWeekly(ev, sourceClass);
+      save(); renderMonth(); renderWeek(); return;
     }
     const newTitle = prompt('Event title:', ev.title) || ev.title;
     const newEnd = prompt('End date (YYYY-MM-DD):', ev.end || ev.start) || ev.end || ev.start;
@@ -7734,14 +8035,20 @@
     ev.url = safeUrl(newUrl);
     ev.periodIndex = periodInput ? Math.max(0, Math.min(STATE.periods.length-1, parseInt(periodInput,10)-1)) : null;
     ev.syncToWeek = ev.periodIndex !== null && !isNaN(ev.periodIndex);
-    if (ev.syncToWeek) syncCalendarEventToWeekly(ev);
+    const changeScope = confirm('Do you want to change which classes can see this event?');
+    if (changeScope) {
+      const scopeInfo = chooseCalendarScope(ev.scope || 'class', ev.classIds || []);
+      if (scopeInfo) { ev.scope = scopeInfo.scope; ev.classIds = scopeInfo.classIds || []; }
+    }
+    if (!ev.ownerClassId) ev.ownerClassId = sourceClass.id;
+    if (ev.syncToWeek) syncCalendarEventToWeekly(ev, sourceClass);
     save(); renderMonth(); renderWeek();
   }
 
-  function dragCalendarEvent(e, id) {
+  function dragCalendarEvent(e, sourceClassId, id) {
     if (id.startsWith('legacy-')) return;
-    calendarDraggingEventId = id;
-    e.dataTransfer.setData('text/plain', id);
+    calendarDraggingEventId = sourceClassId + '|' + id;
+    e.dataTransfer.setData('text/plain', calendarDraggingEventId);
   }
   function allowCalendarDrop(e) {
     e.preventDefault();
@@ -7752,41 +8059,56 @@
     e.preventDefault();
     const cell = e.currentTarget;
     if (cell) cell.classList.remove('drop-target');
-    const cls = activeClass();
-    const id = e.dataTransfer.getData('text/plain') || calendarDraggingEventId;
-    const ev = (cls.calendarEvents || []).find(x => x.id === id);
+    const payload = e.dataTransfer.getData('text/plain') || calendarDraggingEventId;
+    const parts = String(payload || '').split('|');
+    const sourceClass = STATE.classes.find(c => c.id === parts[0]) || activeClass();
+    const id = parts[1] || parts[0];
+    const ev = (sourceClass.calendarEvents || []).find(x => x.id === id);
     if (!ev) return;
     const duration = daysBetweenInclusive(ev.start, ev.end || ev.start);
     ev.start = targetDate;
     ev.end = addDaysToKey(targetDate, duration - 1);
-    if (ev.syncToWeek) syncCalendarEventToWeekly(ev);
+    if (ev.syncToWeek) syncCalendarEventToWeekly(ev, sourceClass);
     save(); renderMonth(); renderWeek();
     showToast('Event moved');
   }
 
   function calendarEventWeeklyText(ev, dateKey) {
-    return [`📅 ${ev.title}`, ev.details || '', ev.url ? 'Link: ' + safeUrl(ev.url) : '', `From monthly calendar: ${dateKey}`].filter(Boolean).join('\n');
+    const scopeText = ev.scope === 'all' ? 'All classes' : (ev.scope === 'selected' ? 'Selected classes' : 'This class');
+    return [`📅 ${ev.title}`, ev.details || '', ev.url ? 'Link: ' + safeUrl(ev.url) : '', `Calendar scope: ${scopeText}`, `From monthly calendar: ${dateKey}`].filter(Boolean).join('\n');
   }
 
-  function syncCalendarEventToWeekly(ev) {
-    const cls = activeClass();
-    if (!cls || ev.periodIndex == null || isNaN(ev.periodIndex)) return;
-    eachDateInRange(ev.start, ev.end || ev.start, (dateKey) => {
-      const di = weeklyDayIndex(dateKey);
-      if (di < 0) return;
-      const week = weekOffsetForDate(dateKey);
-      const planKey = `${cls.id}-${week}-${ev.periodIndex}-${di}`;
-      const text = calendarEventWeeklyText(ev, dateKey);
-      if (!cls.weekPlan[planKey]) cls.weekPlan[planKey] = text;
-      else if (!cls.weekPlan[planKey].includes(`📅 ${ev.title}`)) cls.weekPlan[planKey] += '\n\n' + text;
+  function calendarTargetClasses(ev, sourceClass) {
+    sourceClass = sourceClass || calendarEventSourceClass(ev);
+    const scope = ev.scope || 'class';
+    if (scope === 'all') return STATE.classes;
+    if (scope === 'selected' && Array.isArray(ev.classIds)) return STATE.classes.filter(c => ev.classIds.includes(c.id));
+    return sourceClass ? [sourceClass] : [];
+  }
+
+  function syncCalendarEventToWeekly(ev, sourceClass) {
+    if (!ev || ev.periodIndex == null || isNaN(ev.periodIndex)) return;
+    const targets = calendarTargetClasses(ev, sourceClass);
+    targets.forEach(cls => {
+      if (!cls || !cls.weekPlan) return;
+      eachDateInRange(ev.start, ev.end || ev.start, (dateKey) => {
+        const di = weeklyDayIndex(dateKey);
+        if (di < 0) return;
+        const week = weekOffsetForDate(dateKey);
+        const planKey = `${cls.id}-${week}-${ev.periodIndex}-${di}`;
+        const text = calendarEventWeeklyText(ev, dateKey);
+        if (!cls.weekPlan[planKey]) cls.weekPlan[planKey] = text;
+        else if (!cls.weekPlan[planKey].includes(`📅 ${ev.title}`)) cls.weekPlan[planKey] += '\n\n' + text;
+      });
     });
     save();
   }
 
   function syncCalendarToWeekly() {
-    const cls = activeClass();
     ensurePlannerEnhancements();
-    (cls.calendarEvents || []).forEach(ev => { if (ev.syncToWeek) syncCalendarEventToWeekly(ev); });
+    STATE.classes.forEach(sourceClass => {
+      (sourceClass.calendarEvents || []).forEach(ev => { if (ev.syncToWeek) syncCalendarEventToWeekly(ev, sourceClass); });
+    });
     save();
   }
 
@@ -7797,12 +8119,14 @@
     ensurePlannerEnhancements();
     if (!cls) { grid.innerHTML = '<div style="padding:30px;text-align:center;">Create a class first</div>'; return; }
     syncCalendarToWeekly();
+    const days = plannerDays();
+    setPlannerGridColumns(grid, days);
     let html = '<div class="week-cell head">Period</div>';
-    DAYS.forEach(d => html += `<div class="week-cell head">${d}</div>`);
+    days.forEach(d => html += `<div class="week-cell head">${d}</div>`);
 
     STATE.periods.forEach((p, pi) => {
       html += `<div class="week-cell period">${escapeHtml(p.label)}<br><span style="font-size: 11px; font-weight: 400;">${escapeHtml(p.time || '')}</span></div>`;
-      DAYS.forEach((d, di) => {
+      days.forEach((d, di) => {
         const key = `${cls.id}-${STATE.weekOffset}-${pi}-${di}`;
         const val = cls.weekPlan[key] || '';
         const hasLesson = !!val;
@@ -7822,9 +8146,10 @@
 
     const monday = currentWeekMonday();
     monday.setDate(monday.getDate() + (STATE.weekOffset * 7));
-    const friday = new Date(monday); friday.setDate(friday.getDate() + 4);
+    const daysForLabel = plannerDays();
+    const endDate = new Date(monday); endDate.setDate(endDate.getDate() + daysForLabel.length - 1);
     const m = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    let label = `${m[monday.getMonth()]} ${monday.getDate()} – ${m[friday.getMonth()]} ${friday.getDate()}`;
+    let label = `${m[monday.getMonth()]} ${monday.getDate()} – ${m[endDate.getMonth()]} ${endDate.getDate()}`;
     if (STATE.weekOffset === 0) label = '📍 This Week · ' + label;
     document.getElementById('weekLabel').textContent = label;
   }
@@ -7865,16 +8190,6 @@
     }
     if (!STATE.activeClassId) STATE.activeClassId = STATE.classes[0].id;
 
-    // Live demo always starts with the same polished sample classroom.
-    if (DEMO_MODE) {
-      STATE.user = { name: 'Ms. Harper', school: 'Maple Grove Elementary', grade: 'Grade 4' };
-      STATE.mode = 'elementary';
-      STATE.onboarded = true;
-      STATE.schoolYear = { start: '2026-08-24', end: '2027-06-11', winter: '2026-12-21', spring: '2027-03-15' };
-      STATE.classes[0].name = 'Grade 4 · Room 12';
-      loadDemoData();
-    }
-
     // Apply theme & text size
     document.body.setAttribute('data-theme', STATE.theme || 'default');
     document.documentElement.style.setProperty('--base-size', (STATE.textSize || '15') + 'px');
@@ -7904,10 +8219,495 @@
     setupColoring();
 
     // First-launch onboarding
-    if (!DEMO_MODE && !STATE.onboarded) {
+    if (!STATE.onboarded) {
       setTimeout(showOnboarding, 400);
     }
   })();
+
+
+  /* ─────────────────────────────────────────────
+     WEEKLY FOCUS VIEW + LESSON COLOUR CODING UPDATE
+     Adds:
+     - Hide/show weekly lesson action buttons
+     - Colour-coded weekly lesson boxes for year groups/subjects
+     - Lesson bank colour selection carried into weekly planner
+  ────────────────────────────────────────────── */
+  const DEFAULT_LESSON_COLOURS = [
+    { label: 'Year 5', color: '#8EC5FF' },
+    { label: 'Year 6', color: '#9AD8B3' },
+    { label: 'Year 7', color: '#C7A6E8' },
+    { label: 'English', color: '#FFD37A' },
+    { label: 'Reading', color: '#FFB7A1' },
+    { label: 'Library', color: '#BEE7E8' }
+  ];
+
+  function ensureWeeklyFocusEnhancements() {
+    STATE.weeklyDisplay = STATE.weeklyDisplay || { hideActions: false };
+    if (typeof STATE.weeklyDisplay.hideActions === 'undefined') STATE.weeklyDisplay.hideActions = false;
+    STATE.classes = STATE.classes || [];
+    STATE.classes.forEach(cls => {
+      cls.weekPlan = cls.weekPlan || {};
+      cls.weekMeta = cls.weekMeta || {};
+      cls.lessonBank = cls.lessonBank || [];
+      cls.lessonBank.forEach(l => {
+        if (typeof l.color === 'undefined') l.color = '';
+        if (typeof l.colorLabel === 'undefined') l.colorLabel = '';
+      });
+    });
+  }
+
+  function safeLessonColor(color) {
+    color = String(color || '').trim();
+    if (/^#[0-9A-Fa-f]{6}$/.test(color)) return color;
+    return '';
+  }
+
+  function hexToRgba(hex, alpha) {
+    hex = safeLessonColor(hex);
+    if (!hex) return '';
+    const r = parseInt(hex.slice(1,3), 16);
+    const g = parseInt(hex.slice(3,5), 16);
+    const b = parseInt(hex.slice(5,7), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  }
+
+  function lessonColorStyle(meta) {
+    const color = safeLessonColor(meta && meta.color);
+    if (!color) return '';
+    return ` style="--lesson-accent:${color};--lesson-bg:${hexToRgba(color, 0.28)};"`;
+  }
+
+  function lessonColorPill(meta) {
+    const color = safeLessonColor(meta && meta.color);
+    const label = String((meta && meta.colorLabel) || '').trim();
+    if (!color && !label) return '';
+    return `<div class="lesson-color-pill" contenteditable="false"${lessonColorStyle({color})}><span class="lesson-color-dot"></span>${escapeHtml(label || 'Colour coded')}</div>`;
+  }
+
+  function selectedLessonColourLabel() {
+    const select = document.getElementById('lessonColor');
+    const custom = document.getElementById('lessonColorLabel');
+    const typed = custom ? custom.value.trim() : '';
+    if (typed) return typed;
+    if (!select || !select.value) return '';
+    const opt = select.options[select.selectedIndex];
+    return (opt && (opt.dataset.label || opt.textContent || '')).replace(' English','').trim();
+  }
+
+  function toggleWeeklyActionButtons(hide) {
+    ensureWeeklyFocusEnhancements();
+    STATE.weeklyDisplay.hideActions = !!hide;
+    save();
+    renderWeek();
+    showToast(STATE.weeklyDisplay.hideActions ? 'Clean weekly view enabled' : 'Weekly action buttons shown');
+  }
+
+  function setWeekLessonColor(key) {
+    const cls = activeClass();
+    if (!cls || !cls.weekPlan || !cls.weekPlan[key]) return;
+    ensureWeeklyFocusEnhancements();
+    const menu = DEFAULT_LESSON_COLOURS.map((c, i) => `${i+1}. ${c.label}`).join('\n');
+    const choice = prompt(`Choose a colour label:\n${menu}\n7. Custom colour\n0. Clear colour`, '1');
+    if (choice === null) return;
+    let color = '', label = '';
+    const n = parseInt(choice, 10);
+    if (n === 0) {
+      color = ''; label = '';
+    } else if (n >= 1 && n <= DEFAULT_LESSON_COLOURS.length) {
+      color = DEFAULT_LESSON_COLOURS[n-1].color;
+      label = DEFAULT_LESSON_COLOURS[n-1].label;
+    } else if (n === 7) {
+      label = prompt('Label to show on the weekly box:', 'Year / Group') || '';
+      color = prompt('Hex colour, for example #8EC5FF:', '#8EC5FF') || '';
+      color = safeLessonColor(color) || '#8EC5FF';
+    } else {
+      showToast('No colour changed');
+      return;
+    }
+    cls.weekMeta[key] = cls.weekMeta[key] || {};
+    cls.weekMeta[key].color = color;
+    cls.weekMeta[key].colorLabel = label;
+    save();
+    renderWeek();
+    showToast(color ? 'Lesson colour updated' : 'Lesson colour cleared');
+  }
+
+  readLessonForm = function() {
+    return {
+      id: editingLessonId || ('l' + Date.now() + Math.floor(Math.random()*1000)),
+      title: document.getElementById('lessonTitle').value.trim(),
+      subject: document.getElementById('lessonSubject').value.trim(),
+      className: document.getElementById('lessonClass').value.trim(),
+      duration: document.getElementById('lessonDuration').value.trim(),
+      objective: document.getElementById('lessonObjective').value.trim(),
+      steps: document.getElementById('lessonSteps').value.trim(),
+      materials: document.getElementById('lessonMaterials').value.trim(),
+      resourceUrl: safeUrl(document.getElementById('lessonResourceUrl') ? document.getElementById('lessonResourceUrl').value : ''),
+      videoUrl: safeUrl(document.getElementById('lessonVideoUrl') ? document.getElementById('lessonVideoUrl').value : ''),
+      homework: document.getElementById('lessonHomework').value.trim(),
+      notes: document.getElementById('lessonNotes').value.trim(),
+      color: safeLessonColor(document.getElementById('lessonColor') ? document.getElementById('lessonColor').value : ''),
+      colorLabel: selectedLessonColourLabel(),
+      updated: new Date().toISOString()
+    };
+  };
+
+  clearLessonForm = function() {
+    editingLessonId = null;
+    ['lessonTitle','lessonSubject','lessonClass','lessonDuration','lessonObjective','lessonSteps','lessonMaterials','lessonResourceUrl','lessonVideoUrl','lessonHomework','lessonNotes','lessonColorLabel'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.value = '';
+    });
+    const color = document.getElementById('lessonColor');
+    if (color) color.value = '';
+    const btn = document.getElementById('saveLessonBtn');
+    if (btn) btn.textContent = '+ Save Lesson';
+  };
+
+  editLesson = function(id) {
+    const cls = activeClass();
+    const l = (cls.lessonBank || []).find(x => x.id === id);
+    if (!l) return;
+    editingLessonId = id;
+    document.getElementById('lessonTitle').value = l.title || '';
+    document.getElementById('lessonSubject').value = l.subject || '';
+    document.getElementById('lessonClass').value = l.className || '';
+    document.getElementById('lessonDuration').value = l.duration || '';
+    document.getElementById('lessonObjective').value = l.objective || '';
+    document.getElementById('lessonSteps').value = l.steps || '';
+    document.getElementById('lessonMaterials').value = l.materials || '';
+    if (document.getElementById('lessonResourceUrl')) document.getElementById('lessonResourceUrl').value = l.resourceUrl || '';
+    if (document.getElementById('lessonVideoUrl')) document.getElementById('lessonVideoUrl').value = l.videoUrl || '';
+    document.getElementById('lessonHomework').value = l.homework || '';
+    document.getElementById('lessonNotes').value = l.notes || '';
+    if (document.getElementById('lessonColor')) document.getElementById('lessonColor').value = safeLessonColor(l.color || '');
+    if (document.getElementById('lessonColorLabel')) document.getElementById('lessonColorLabel').value = l.colorLabel || '';
+    document.getElementById('saveLessonBtn').textContent = 'Update Lesson';
+    window.scrollTo({top:0, behavior:'smooth'});
+  };
+
+  renderLessonBank = function() {
+    const list = document.getElementById('lessonBankList');
+    if (!list) return;
+    const cls = activeClass();
+    ensurePlannerEnhancements();
+    ensureWeeklyFocusEnhancements();
+    if (!cls) { list.innerHTML = ''; return; }
+    cls.lessonBank = cls.lessonBank || [];
+    if (!cls.lessonBank.length) {
+      list.innerHTML = '<div class="card"><p style="text-align:center;font-family:var(--font-hand);font-size:20px;color:var(--ink-faint);">No saved lessons yet — add one on the left or load demo lessons ✨</p></div>';
+      return;
+    }
+    list.innerHTML = cls.lessonBank.map(l => {
+      const links = [];
+      if (isValidUrl(l.resourceUrl)) links.push(`<a href="${escapeHtml(safeUrl(l.resourceUrl))}" target="_blank" rel="noopener">🔗 Open Lesson Resource</a>`);
+      if (isValidUrl(l.videoUrl)) links.push(`<a href="${escapeHtml(safeUrl(l.videoUrl))}" target="_blank" rel="noopener">▶️ Open Video</a>`);
+      return `<div class="lesson-card"${lessonColorStyle(l)}>
+        <h3>${escapeHtml(l.title)}</h3>
+        <div class="lesson-card-meta">${escapeHtml(l.subject || 'No subject')} · ${escapeHtml(l.className || 'Any class')} · ${escapeHtml(l.duration || 'No duration')}</div>
+        ${lessonColorPill(l)}
+        ${l.objective ? `<p><strong>Objective:</strong> ${linkify(l.objective)}</p>` : ''}
+        ${l.steps ? `<p style="margin-top:6px;"><strong>Steps:</strong> ${linkify(l.steps.slice(0,220))}${l.steps.length>220?'…':''}</p>` : ''}
+        ${links.length ? `<div class="resource-link-row">${links.join('')}</div>` : ''}
+        <div class="lesson-card-actions">
+          <button class="btn btn-leaf btn-sm" onclick="useLessonInWeek('${l.id}')">Use in Week</button>
+          <button class="btn btn-secondary btn-sm" onclick="editLesson('${l.id}')">Edit</button>
+          <button class="btn btn-secondary btn-sm" onclick="duplicateLesson('${l.id}')">Duplicate</button>
+          <button class="btn btn-tomato btn-sm" onclick="deleteLesson('${l.id}')">Delete</button>
+        </div>
+      </div>`;
+    }).join('');
+  };
+
+  saveLessonBankItem = function() {
+    const cls = activeClass();
+    ensurePlannerEnhancements();
+    ensureWeeklyFocusEnhancements();
+    cls.lessonBank = cls.lessonBank || [];
+    const lesson = readLessonForm();
+    if (!lesson.title) return alert('Please add a lesson title.');
+    const idx = cls.lessonBank.findIndex(l => l.id === lesson.id);
+    if (idx >= 0) cls.lessonBank[idx] = lesson;
+    else cls.lessonBank.unshift(lesson);
+    clearLessonForm();
+    renderLessonBank();
+    save();
+    showToast('Lesson saved 📚');
+  };
+
+  useLessonInWeek = function(id) {
+    const cls = activeClass();
+    ensurePlannerEnhancements();
+    ensureWeeklyFocusEnhancements();
+    const l = (cls.lessonBank || []).find(x => x.id === id);
+    if (!l) return;
+    const day = prompt(`Which day? Type ${plannerDayLabelList()}:`, 'Mon');
+    if (!day) return;
+    const availableDays = plannerDays();
+    const di = availableDays.findIndex(d => d.toLowerCase() === day.trim().slice(0,3).toLowerCase());
+    if (di < 0) return alert(`Please enter one of: ${plannerDayLabelList()}.`);
+    const period = prompt('Which period number? Example: 1 for P1, 2 for P2:', '1');
+    const parsedPeriod = parseInt(period, 10);
+    if (!period || isNaN(parsedPeriod)) return alert('Please enter a valid period number.');
+    const pi = Math.max(0, Math.min(STATE.periods.length-1, parsedPeriod-1));
+    const key = `${cls.id}-${STATE.weekOffset}-${pi}-${di}`;
+    const text = [lessonSummary(l), l.resourceUrl ? 'Resource: ' + safeUrl(l.resourceUrl) : '', l.videoUrl ? 'Video: ' + safeUrl(l.videoUrl) : ''].filter(Boolean).join('\n');
+    if (cls.weekPlan[key]) cls.weekPlan[key] += '\n\n' + text;
+    else cls.weekPlan[key] = text;
+    if (safeLessonColor(l.color) || l.colorLabel) {
+      cls.weekMeta[key] = cls.weekMeta[key] || {};
+      cls.weekMeta[key].color = safeLessonColor(l.color);
+      cls.weekMeta[key].colorLabel = l.colorLabel || '';
+      cls.weekMeta[key].sourceLessonId = l.id;
+    }
+    save();
+    renderWeek();
+    goTo('planner');
+    showToast('Lesson added to week');
+  };
+
+  sendWeekLessonToBank = function(key) {
+    const cls = activeClass();
+    ensureWeeklyFocusEnhancements();
+    const text = cls.weekPlan[key];
+    if (!text) return;
+    const meta = (cls.weekMeta && cls.weekMeta[key]) || {};
+    cls.lessonBank = cls.lessonBank || [];
+    cls.lessonBank.unshift({ id:'l' + Date.now(), title:text.split('\n')[0] || text, subject:'', className:cls.name, duration:'', objective:'', steps:text, materials:'', resourceUrl:'', videoUrl:'', homework:'', notes:'Sent back from weekly planner', color: safeLessonColor(meta.color), colorLabel: meta.colorLabel || '', updated:new Date().toISOString() });
+    delete cls.weekPlan[key];
+    if (cls.weekMeta) delete cls.weekMeta[key];
+    save();
+    renderWeek();
+    showToast('Sent to Lesson Bank');
+  };
+
+  moveWeekLesson = function(key, direction) {
+    const cls = activeClass();
+    ensureWeeklyFocusEnhancements();
+    const parts = key.split('-');
+    const di = Number(parts.pop());
+    const pi = Number(parts.pop());
+    const week = Number(parts.pop());
+    const lesson = cls.weekPlan[key];
+    const meta = cls.weekMeta ? cls.weekMeta[key] : null;
+    if (!lesson) return;
+    let newWeek = week, newPi = pi, newDi = di;
+    const maxDayIndex = plannerDays().length - 1;
+    if (direction === 'nextDay') { newDi = di + 1; if (newDi > maxDayIndex) { newDi = 0; newWeek = week + 1; } }
+    if (direction === 'prevDay') { newDi = di - 1; if (newDi < 0) { newDi = maxDayIndex; newWeek = week - 1; } }
+    if (direction === 'nextWeek') { newWeek = week + 1; }
+    const newKey = `${cls.id}-${newWeek}-${newPi}-${newDi}`;
+    if (cls.weekPlan[newKey] && !confirm('That slot already has a lesson. Replace it?')) return;
+    cls.weekPlan[newKey] = lesson;
+    delete cls.weekPlan[key];
+    if (meta) {
+      cls.weekMeta[newKey] = meta;
+      delete cls.weekMeta[key];
+    }
+    save();
+    renderWeek();
+    showToast(direction === 'prevDay' ? 'Pulled back' : 'Bumped forward');
+  };
+
+  renderWeek = function() {
+    const grid = document.getElementById('weekGrid');
+    const cls = activeClass();
+    if (!grid) return;
+    ensurePlannerEnhancements();
+    ensureWeeklyFocusEnhancements();
+    if (!cls) { grid.innerHTML = '<div style="padding:30px;text-align:center;">Create a class first</div>'; return; }
+    syncCalendarToWeekly();
+    const days = plannerDays();
+    setPlannerGridColumns(grid, days);
+    let html = '<div class="week-cell head">Period</div>';
+    days.forEach(d => html += `<div class="week-cell head">${d}</div>`);
+
+    STATE.periods.forEach((p, pi) => {
+      html += `<div class="week-cell period">${escapeHtml(p.label)}<br><span style="font-size: 11px; font-weight: 400;">${escapeHtml(p.time || '')}</span></div>`;
+      days.forEach((d, di) => {
+        const key = `${cls.id}-${STATE.weekOffset}-${pi}-${di}`;
+        const val = cls.weekPlan[key] || '';
+        const hasLesson = !!val;
+        const meta = (cls.weekMeta && cls.weekMeta[key]) || {};
+        const colorClass = hasLesson && safeLessonColor(meta.color) ? ' color-coded' : '';
+        const hideActions = STATE.weeklyDisplay && STATE.weeklyDisplay.hideActions;
+        const actionHtml = hasLesson && !hideActions ? `<div class="week-lesson-actions" contenteditable="false"><button onclick="moveWeekLesson('${key}','prevDay')">Pull back</button><button onclick="moveWeekLesson('${key}','nextDay')">Bump forward</button><button onclick="moveWeekLesson('${key}','nextWeek')">Next week</button><button onclick="sendWeekLessonToBank('${key}')">Bank</button><button onclick="setWeekLessonColor('${key}')">Colour</button></div>` : '';
+        html += `<div class="week-cell editable ${hasLesson ? 'has-lesson' : ''}${colorClass}${hideActions ? ' hide-week-actions' : ''}" data-key="${key}"${lessonColorStyle(meta)}><div class="week-text" contenteditable="true" spellcheck="true">${linkify(val)}</div>${lessonColorPill(meta)}${actionHtml}</div>`;
+      });
+    });
+    grid.innerHTML = html;
+
+    grid.querySelectorAll('.week-text').forEach(textEl => {
+      textEl.addEventListener('blur', () => {
+        const cell = textEl.closest('.week-cell');
+        const key = cell.dataset.key;
+        cls.weekPlan[key] = textEl.textContent.trim();
+        if (!cls.weekPlan[key] && cls.weekMeta) delete cls.weekMeta[key];
+        save();
+        renderWeek();
+      });
+    });
+
+    const monday = currentWeekMonday();
+    monday.setDate(monday.getDate() + (STATE.weekOffset * 7));
+    const daysForLabel = plannerDays();
+    const endDate = new Date(monday); endDate.setDate(endDate.getDate() + daysForLabel.length - 1);
+    const m = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    let label = `${m[monday.getMonth()]} ${monday.getDate()} – ${m[endDate.getMonth()]} ${endDate.getDate()}`;
+    if (STATE.weekOffset === 0) label = '📍 This Week · ' + label;
+    const weekLabel = document.getElementById('weekLabel');
+    if (weekLabel) weekLabel.textContent = label;
+  };
+
+  const basePopulateSettingsForFocus = populateSettings;
+  populateSettings = function() {
+    basePopulateSettingsForFocus();
+    ensureWeeklyFocusEnhancements();
+    const toggle = document.getElementById('setHideWeekActions');
+    if (toggle) toggle.checked = !!(STATE.weeklyDisplay && STATE.weeklyDisplay.hideActions);
+  };
+
+  const baseMigratePlannerDataForFocus = migratePlannerData;
+  migratePlannerData = function() {
+    baseMigratePlannerDataForFocus();
+    ensureWeeklyFocusEnhancements();
+  };
+
+  ensureWeeklyFocusEnhancements();
+  renderWeek();
+  renderLessonBank();
+
+
+  /* ─────────────────────────────────────────────
+     DEMO VERSION PROTECTION + RICH SAMPLE DATA
+     - No persistent saving
+     - Export/import disabled
+     - Sample classes, lessons, calendar, colours loaded automatically
+  ────────────────────────────────────────────── */
+  function demoStudentNames(prefix) {
+    return ['Aisha Ahmed','Noah Brown','Maya Chen','Diego Cruz','Emma Davis','Liam Evans','Sara Farooq','Jayden Garcia','Hana Hassan','Ivan Ivanov','Zara Khan','Lily Lee','Mateo Martinez','Naima Nasir','Owen Olsen','Priya Patel'].map((n,i)=> prefix ? n + ' ' + prefix : n);
+  }
+
+  function demoLessonText(title, objective, activity) {
+    return `${title}\nObjective: ${objective}\nActivity: ${activity}`;
+  }
+
+  function buildDemoClass(name, label, colour, subject) {
+    const cls = makeEmptyClass(name);
+    cls.students = demoStudentNames(label).map((name, i) => ({
+      name,
+      grades: [78 + ((i * 3) % 21)],
+      att: i % 9 === 0 ? 'A' : (i % 6 === 0 ? 'L' : 'P'),
+      iep: i === 3 || i === 10,
+      bday: ['01-12','02-18','03-06','03-24','04-15','05-03','05-26','06-11','07-19','08-02','08-29','09-13','10-07','10-28','11-16','12-05'][i]
+    }));
+    cls.lessonBank = [
+      {id:'demo-' + cls.id + '-1', title:`${label} Reading Inference`, subject:subject, className:cls.name, duration:'45 minutes', objective:'Use clues from the text to make and justify an inference.', steps:'Starter question, model inference, partner reading, independent response, exit ticket.', materials:'Short passage, highlighters, response sheet', homework:'Finish inference response', notes:'Reusable across English classes', color:colour, colorLabel:label, updated:new Date().toISOString()},
+      {id:'demo-' + cls.id + '-2', title:`${label} Vocabulary Builder`, subject:subject, className:cls.name, duration:'35 minutes', objective:'Use context clues to define new vocabulary.', steps:'Word sort, context clue mini lesson, group practice, quick quiz.', materials:'Vocabulary cards, notebook', homework:'Write five vocabulary sentences', notes:'Good for cover lesson or quick review', color:colour, colorLabel:label, updated:new Date().toISOString()}
+    ];
+    cls.weekPlan = {};
+    cls.weekMeta = {};
+    const days = plannerDays();
+    STATE.periods.forEach((p, pi) => {
+      days.forEach((d, di) => {
+        if (pi < 4 && di < Math.min(days.length, 5)) {
+          const key = `${cls.id}-0-${pi}-${di}`;
+          const titles = [
+            `${label} English: Inference practice`,
+            `${label} Grammar mini lesson`,
+            `${label} Guided reading`,
+            `${label} Writing workshop`,
+            `${label} Review / reflection`
+          ];
+          cls.weekPlan[key] = demoLessonText(titles[di] || `${label} Lesson`, 'Build confidence and complete the weekly learning target.', 'Teacher model, student practice, short reflection.');
+          cls.weekMeta[key] = {color: colour, colorLabel: label};
+        }
+      });
+    });
+    cls.gradebook = {
+      categories: defaultGradeCategories(),
+      assignments: [{name:'Reading Response', category:'hw'}, {name:'Vocabulary Quiz', category:'quiz'}, {name:'Writing Task', category:'test'}],
+      scores: {}
+    };
+    cls.students.forEach((s, si) => {
+      cls.gradebook.scores[si] = {};
+      cls.gradebook.assignments.forEach((a, ai) => cls.gradebook.scores[si][ai] = 76 + ((si + ai * 5) % 24));
+    });
+    const today = new Date();
+    const todayStr = today.toISOString().slice(0,10);
+    const d2 = new Date(today); d2.setDate(today.getDate()+2);
+    const d2Str = d2.toISOString().slice(0,10);
+    cls.calendarEvents = [
+      {id:'demo-all-' + cls.id, title:'Whole school assembly', details:'Example shared event visible across all classes.', url:'', start:todayStr, end:todayStr, periodIndex:null, syncToWeek:false, scope:'all', classIds:[], ownerClassId:cls.id, createdAt:new Date().toISOString()},
+      {id:'demo-class-' + cls.id, title:`${label} English assessment`, details:'Example class-only event.', url:'', start:d2Str, end:d2Str, periodIndex:null, syncToWeek:false, scope:'class', classIds:[], ownerClassId:cls.id, createdAt:new Date().toISOString()}
+    ];
+    cls.homework = [{date: todayStr, student:'Whole Class', subject:subject, task:`${label}: Read 20 minutes and note two examples.`}];
+    cls.reading = [{date: todayStr, student:cls.students[0].name, book:'The Explorer', minutes:'20', notes:'Good discussion'}];
+    cls.behavior = [{date: todayStr, student:cls.students[1].name, type:'Positive', note:'Excellent participation in paired discussion.'}];
+    cls.contacts = [{date: todayStr, student:cls.students[2].name, type:'Email', note:'Shared positive progress update.'}];
+    cls.unitPlans = [{id:'unit-' + cls.id, title:`${label} Reading Skills Unit`, subject:subject, start:todayStr, end:d2Str, status:'Active', standards:'Inference, vocabulary, written response.', objectives:'Students will support answers with evidence.', resources:'Passages, vocabulary cards, rubrics.', assessment:'Short written response and vocabulary quiz.', notes:'Demo sample only.', updated:new Date().toISOString()}];
+    cls.curriculumMap = [{id:'map-' + cls.id, month:'September', topic:`${label} Reading & Writing`, subject:subject, standards:'Reading comprehension, grammar, writing structure.', questions:'How do strong readers support their thinking?', assessment:'Weekly reading response.', notes:'Demo sample only.', updated:new Date().toISOString()}];
+    cls.interventions = [{id:'int-' + cls.id, student:cls.students[3].name, area:'Reading fluency', strategy:'Short repeated reading with check-in.', frequency:'2x per week', status:'Active', progress:'Building confidence.', next:'Continue next week.', updated:new Date().toISOString()}];
+    cls.smallGroups = [{id:'grp-' + cls.id, name:`${label} Support Group`, focus:'Inference and vocabulary', students:cls.students.slice(0,4).map(s=>s.name), schedule:'Tue/Thu', status:'Active', goal:'Answer with text evidence.', notes:'Demo group.', updated:new Date().toISOString()}];
+    cls.seating = cls.students.map(s => s.name);
+    return cls;
+  }
+
+  function seedDemoPlanner() {
+    try {
+      STATE.user = {name:'Demo Teacher', school:'Sample School', grade:'Year 5–7 / Library'};
+      STATE.mode = 'secondary';
+      STATE.theme = STATE.theme || 'default';
+      STATE.showWeekends = true;
+      STATE.periods = [
+        {label:'P1', time:'8:30'},
+        {label:'P2', time:'9:20'},
+        {label:'P3', time:'10:15'},
+        {label:'P4', time:'11:10'},
+        {label:'P5', time:'12:45'},
+        {label:'P6', time:'1:35'},
+        {label:'P7', time:'2:25'}
+      ];
+      STATE.weeklyDisplay = STATE.weeklyDisplay || {hideActions:false};
+      STATE.classes = [
+        buildDemoClass('Year 5 English', 'Year 5', '#bfdbfe', 'English'),
+        buildDemoClass('Year 6 English', 'Year 6', '#bbf7d0', 'English'),
+        buildDemoClass('Year 7 English', 'Year 7', '#fde68a', 'English'),
+        buildDemoClass('Kinder–2 Library', 'Library', '#ddd6fe', 'Library')
+      ];
+      STATE.activeClassId = STATE.classes[0].id;
+      STATE.goals = [
+        {text:'Try colour-coded weekly lesson boxes', done:false},
+        {text:'Switch classes to see shared calendar examples', done:false},
+        {text:'Turn on clean weekly view in Settings', done:false}
+      ];
+      STATE.notes = 'Demo mode: edits work while you test, but nothing is saved after refresh. Export/import are disabled in this preview.';
+      const notesEl = document.getElementById('notesArea');
+      if (notesEl) notesEl.value = STATE.notes;
+      renderAll();
+      renderGradebook();
+      renderGoals();
+      populateSettings();
+      const banner = document.getElementById('demoModeBanner');
+      if (banner) banner.title = 'This is a preview/demo. It does not save to your device.';
+      showToast('Demo loaded with sample classes ✨');
+    } catch (err) {
+      console.warn('Demo seed failed', err);
+    }
+  }
+
+  document.addEventListener('keydown', function(e) {
+    const key = String(e.key || '').toLowerCase();
+    if ((e.ctrlKey || e.metaKey) && ['s','u'].includes(key)) {
+      e.preventDefault();
+      alert('Demo mode: saving/downloading/viewing source is disabled in this preview. Please purchase the full version for your own editable file.');
+    }
+  });
+  document.addEventListener('contextmenu', function(e) {
+    if (DEMO_MODE) e.preventDefault();
+  });
+  setTimeout(seedDemoPlanner, 80);
+
 </script>
 
 </body>
